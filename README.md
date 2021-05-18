@@ -69,6 +69,7 @@ By default it should be host: 127.0.0.1 and port: 8545
 
 6. Connect your ganache addresses to Metamask! 
 Copy private Key of the addresses in ganache and import to Metamask
+Connect your metamask to network Localhost 8545
 
 ### Migrating contracts and Testing
 
@@ -87,7 +88,7 @@ $ truffle migrate --reset
 $ truffle test
 ```
 
-# Front End and how to use Dapp
+### Front End and how to use Dapp
 
 1. Run app locally 
 ```sh
@@ -96,6 +97,18 @@ $ npm run start
 
 Click the button "Borrow DAI" to deposit ETH and borrow an amount of DAI into your wallet from Aave protocol
 To interact with DAPP you need Metamask installed
+
+### To do app extension ideas 
+- Dapp functionalty hardcoded to only deposit ETH and borrow DAI will in future extend to lend any EC20 and borrow 
+any asset offered in Aave markets
+- Display interest rates for borrowing assets
+- Display your transactions using subscribe to events e.g DepositBorrow in event in contract or such other etc 
+- Repay borrowed amount etc
+- Withdraw collateral etc
+- Metrics like interest rate, liquidation, availaleBorrowsETH, etc
+
+### LINK TO VIDEO 
+
 
 License
 ----

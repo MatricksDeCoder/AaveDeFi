@@ -9,10 +9,12 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      account: '0x0000000000000000000000000000000000000000',
+      web3: '',
+      account: '',
       ethBalance: 0,
       daiBalance: 0,
       aaveDeFi: '',
+      dai: '',
       version: version,
       loading: true
     }
@@ -22,6 +24,7 @@ class App extends Component {
   async componentWillMount() {
     await this.loadWeb3()
     await this.loadBlockchainData()
+    await this.loadDAIBalance()
   }
 
   async loadWeb3() {
@@ -37,16 +40,21 @@ class App extends Component {
     }
   }
 
-  borrowDAI = () => {
-    console.log('Starting process borrowing DAI from Aave')
-    console.log('Successfully completed borrowing DAI')
-  }
-
   async loadBlockchainData() {
     const web3 = window.web3
     // Load account
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0] })
+    // Load account ETH balance
+    if(this.state.account) {
+      let ethBalance = await web3.eth.getBalance(this.state.account)
+      this.setState({ ethBalance })
+    }
+    // Load DAI balance 
+    if(this.state.account) {
+      let ethBalance = await web3.eth.getBalance(this.state.account)
+      this.setState({ ethBalance })
+    }
     // Network ID
     const networkId = await web3.eth.net.getId()
     const networkData = AaveDeFi.networks[networkId]
@@ -62,6 +70,46 @@ class App extends Component {
     } else {
       window.alert('AaveDeFi contract not deployed to detected network.')
     }
+  }
+
+  async loadDAIBalance() {
+
+    const web3 = window.web3
+
+    let daiTokenAddress = "0x6B175474E89094C44Da98b954EedeAC495271d0F"
+    // Stripped ABI for ERC20 token
+    let minABI = [
+      // balanceOf
+      {
+        "constant":true,
+        "inputs":[{"name":"_owner","type":"address"}],
+        "name":"balanceOf",
+        "outputs":[{"name":"balance","type":"uint256"}],
+        "type":"function"
+      },
+      // decimals
+      {
+        "constant":true,
+        "inputs":[],
+        "name":"decimals",
+        "outputs":[{"name":"","type":"uint8"}],
+        "type":"function"
+      }
+    ];
+
+    let contract = new web3.eth.Contract(minABI,daiTokenAddress);
+    // Load account DAI balance
+    if(this.state.account) {
+      let daiBalance = await contract.methods.balanceOf(this.state.account).call()
+      daiBalance = daiBalance.toString()
+      this.setState({ daiBalance })
+    }
+
+  }
+
+  borrowDAI = () => {
+    console.log('Starting process borrowing DAI from Aave')
+    console.log('Successfully completed borrowing DAI')
   }
 
   render() {
@@ -114,14 +162,12 @@ class App extends Component {
                         <tr>
                           <th scope="col">ETH Balance</th>
                           <th scope="col">DAI Balance</th>
-                          <th scope="col">Interest rates</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
                           <td>{this.state.ethBalance}</td>
                           <td>{this.state.daiBalance}</td>
-                          <td>{this.state.ethBalance}</td>
                         </tr>
                       </tbody>
                     </table>
