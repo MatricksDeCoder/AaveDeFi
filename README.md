@@ -7,14 +7,9 @@ With a single function you can deposit ETH and then borrow some DAI against that
 ### Usage
 You need to have [Metamask Wallet](https://metamask.io/). Connect to the app using your wallet. When connected, your address will show on the top navigation bar. You can follow the Metamask prompts to complete the transactions on the Dapp.
 
-# Development Project
-
-### Deployment
-
-Smart Contracts deployed to Ethereum [Rinkeby Testnet](https://www.rinkeby.io/#stats) and [Kovan Testnest](https://kovan-testnet.github.io/website/). The smart contracts are not upgradeable. App deployed on [Heroku](https://www.heroku.com/) and is available on site [XXXXX](xxxxx) but must have Metamask installed on your computer.
-
 ### Technology Stack and Tools
 
+* [Aave Protocol](https://aave.com/)
 * [Metamask Wallet](https://metamask.io/)
 * [Truffle](https://www.trufflesuite.com/) - development framework
 * [React](https://reactjs.org/) - front end framework
@@ -47,7 +42,7 @@ $ git clone https://github.com/MatricksDeCoder/AaveDeFi.git
 
 2. Enter project directory and install dependancies
 ```sh
-$ cd Fojini-DEX
+$ cd AaveDeFi
 $ npm install 
 ```
 
@@ -72,7 +67,7 @@ Above should run local blockchain with ganache.
 Ensure truffle-config.js networks config is your Ganache port. 
 By default it should be host: 127.0.0.1 and port: 8545 
 
-6. Connect your ganache addresses to Metamask
+6. Connect your ganache addresses to Metamask! 
 Copy private Key of the addresses in ganache and import to Metamask
 
 ### Migrating contracts and Testing
