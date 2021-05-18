@@ -7,19 +7,18 @@ import './ILendingPool.sol';
 
 contract AaveDeFi {
 
-    // name our contract 
     string public name = "MY Aave DeFi";
     
     // references to Aave LendingPoolProvider and LendingPool
     ILendingPoolAddressesProvider public provider;
     ILendingPool public lendingPool;
 
-    /// @notice DepositBorrow event emitted
+    /// @notice DepositBorrow event emitted on success
     event DepositBorrow(uint256 ethAmountDeposited, uint256 daiAmountBorrowed);
 
     constructor() {
-        // Retrieve LendingPool address using Aave Lending Pool Provider V1
-        provider = LendingPoolAddressesProvider(address(0x24a42fD28C976A61Df5D00D0599C34c4f90748c8)); 
+        // Retrieve LendingPool address using Aave Lending Pool Provider V2
+        provider = ILendingPoolAddressesProvider(address(0xb53c1a33016b2dc2ff3653530bff1848a515c8c5#code)); 
         lendingPool = ILendingPool(provider.getLendingPool());
     }
 
@@ -32,15 +31,39 @@ contract AaveDeFi {
         address ethAddress = address(0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE); // ETH mock address
         uint256 referall = 0; // referralCode 
         uint256 variableRate = 2; // 1 is stable rate, 2 is variable rate
+        uint256 LTV = 0.8; // LoanToValue Ratio DAI is 0.75 ETH is 0.80 in v2 
 
-        // Approve LendingPool contract to move your DAI
-        IERC20(daiAddress).approve(provider.getLendingPoolCore(), _amountDAIBorrow);
+        function userDepositDai(uint256 _amountInDai) external {
+        userDepositedDai[msg.sender] = _amountInDai;
+        require(dai.transferFrom(msg.sender, address(this), _amountInDai), "DAI Transfer failed!");
+        aaveLendingPool.deposit(address(dai), _amountInDai, 0);
+    }
+
+        // function deposit(address asset, uint256 amount, address onBehalfOf, uint16 referralCode)
         // Deposit the ETH sent with msg.value
-        lendingPool.deposit(ethAddress, msg.value, msg.sender, referral);
-        // determine the maximum amount of DAI that cna be borrowed against the collateral value 
-        uint256 a = 12;
+        address onBehalf = msg.sender;
+        lendingPool.deposit(ethAddress, msg.value, onBehalf, referall);
+
+        // Enable deposit to be used as collateral
+        lendingPool.setUserUseReserveAsCollateral(ethAddress, true);
+
+        // determine the maximum amount of DAI that can be borrowed against the ETH collateral deposited 
+        // function getUserAccountData(address user)
+        (uint256 totalCollateralETH,
+        uint256 totalDebtETH,
+        uint256 availableBorrowsETH,
+        uint256 currentLiquidationThreshold,
+        uint256 ltv,
+        uint256 healthFactor) = lendingPool.getUserAccountData(onBehalf);
+
+        // use availableBorrowsETH to determin max amount DAI to borrow
+        // not sure (making assumptions here) e.g 
+        // do we need to use Oracle? Is there functions to determine amount for each asset etc ???
+        uint _amountDAIBorrow = availableBorrowsETH * 3000 // simplify price ETH get amount DAI in wei 
+
+        //function borrow(address asset, uint256 amount, uint256 interestRateMode, uint16 referralCode, address onBehalfOf)
         // Borrow DAI
-        lendingPool.borrow(daiAddress, _amountDAIBorrow, variableRate, referral, msg.sender);
+        lendingPool.borrow(daiAddress, _amountDAIBorrow, variableRate, referall, onBehalf);
 
         emit DepositBorrow(msg.value, _amountDAIBorrow);
     }

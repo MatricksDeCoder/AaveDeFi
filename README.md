@@ -46,7 +46,7 @@ $ cd AaveDeFi
 $ npm install 
 ```
 
-3. Install truffle globally 
+3. Install truffle globally (preferrably truffle@v5.1.10)
 ```sh
 $ npm install -g truffle
 ```
@@ -101,6 +101,7 @@ To interact with DAPP you need Metamask installed
 ### To do app extension ideas 
 - Dapp functionalty hardcoded to only deposit ETH and borrow DAI will in future extend to lend any EC20 and borrow 
 any asset offered in Aave markets
+- Display blances aTokens etc
 - Display interest rates for borrowing assets
 - Display your transactions using subscribe to events e.g DepositBorrow in event in contract or such other etc 
 - Repay borrowed amount etc

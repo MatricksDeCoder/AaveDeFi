@@ -82,8 +82,13 @@ contract('AaveDeFi', ([deployer, account]) => {
     it('sucessfully withdraws ETH from user to Aave', async () => {
        // new ETH balance should decrease by approx ethAmountDeposited
        // small discrepency may be due to fees
+
       const ethBalanceNew = await web3.eth.getBalance(account)
+      
       expect(ethBalanceNew).to.be.lt(ethBalance.sub(ethAmountDeposited).toString())
+
+      console.log(`${ethBalanceNew.toString()} is approx ${(ethBalance.sub(ethAmountDeposited)).toString()}`)
+
     })
 
     it('sucessfully deposits borrowed DAI from Aave to user wallet', async() => {

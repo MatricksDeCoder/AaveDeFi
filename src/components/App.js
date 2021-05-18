@@ -2,7 +2,6 @@ import AaveDeFi from '../abis/AaveDeFi.json'
 import React, { Component } from 'react';
 import Web3 from 'web3';
 import './App.css';
-import { version } from 'ethers';
 
 class App extends Component {
 
@@ -15,7 +14,6 @@ class App extends Component {
       daiBalance: 0,
       aaveDeFi: '',
       dai: '',
-      version: version,
       loading: true
     }
     this.borrowDAI = this.borrowDAI.bind(this)
@@ -62,9 +60,6 @@ class App extends Component {
       // set connection to contract in state
       const aaveDeFi = new web3.eth.Contract(AaveDeFi.abi, networkData.address)
       this.setState({ aaveDeFi })
-      // set the current version in state
-      const version = await aaveDeFi.methods.version().call().toString()
-      this.setState({ version })
       // set loading false after getting from blockchain
       this.setState({ loading: false})
     } else {
@@ -109,6 +104,11 @@ class App extends Component {
 
   borrowDAI = () => {
     console.log('Starting process borrowing DAI from Aave')
+    this.setState({ loading: true })
+    this.state.aaveDeFi.methods.borrowDAIAgainstETH().send({ from: this.state.account }).on('transactionHash', (hash) => {
+      console.log(hash)
+      this.setState({ loading: false })
+    })
     console.log('Successfully completed borrowing DAI')
   }
 
