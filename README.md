@@ -18,92 +18,89 @@ Smart Contracts deployed to Ethereum [Rinkeby Testnet](https://www.rinkeby.io/#s
 * [Metamask Wallet](https://metamask.io/)
 * [Truffle](https://www.trufflesuite.com/) - development framework
 * [React](https://reactjs.org/) - front end framework
-* [Redux](https://redux.js.org/) - front end state management framework
 * [Solidity](https://docs.soliditylang.org/en/v0.7.4/) - ethereum smart contract language
 * [Ganache](https://www.trufflesuite.com/ganache) - local blockchain development
 * [Web3](https://web3js.readthedocs.io/en/v1.3.0/) - library interact with ethereum nodes 
 * [JavaScript](https://www.javascript.com/) - logic front end and testing smart contracts
 * [Infura](https://infura.io/) - connection to ethereum networks 
 * [Open Zeppelin](https://infura.io/) - smart contract libraries 
-* [Oracle](https://docs.rhombus.network/#rhombus-api-reference) - Lighthouse, Rhombus for randomness
 
-
-### Installation
-You need to have [ganache-cli](https://www.npmjs.com/package/ganache-cli) installed globally using npm!
-
-Clone the project 
-
-```sh
-$ git clone https://github.com/MatricksDeCoder/Fojini-DEX.git
-$ cd Fojini-DEX
-```
-##### Folder / Directory Structure
-* Fojini Dex
+##### Folder / Directory Structure (key folders)
+* AaveDefi
   * migrations 
   * public 
-  * scripts
   * src
     * abis
     * components
     * contracts
-    * flats
-    * store
     index.js
   * tests
 
-You will need earlier versions of node e.g 8.10.0 was used 
+### Preconfiguration, Installation and Running project locally 
 
-Install dependancies
+You will node installed node (14.15.4) is preferred
+
+1. Clone repository 
 ```sh
+$ git clone https://github.com/MatricksDeCoder/AaveDeFi.git
+```
+
+2. Enter project directory and install dependancies
+```sh
+$ cd Fojini-DEX
 $ npm install 
 ```
-Run local blockchain with ganache. Ensure truffle-config.js networks config is your Ganache port. By default it should be host: 127.0.0.1 and port: 7545 or 8545 depending you used GUI or CLI. 
 
+3. Install truffle globally 
 ```sh
-$ ganache-cli 
-```
-Connect your ganache addresses from list of given addresses to Metamask by copying the private key and importing these private keys to Metamask.
-
-Compile, Test and Migrate Contracts on Ganache 
-To deploy to rinkeby use truffle migrate --reset --network rinkeby
-Advisable to rerun ganache-cli before each test
-```sh
-$ truffle compile --all
-$ truffle test ./test/Token.test.js
-$ truffle test ./test/Exchange.test.js
-$ truffle migrate --reset --network development
-```
-Load exchange with some initial data, orders, trades, cancels etc 
-```sh
-$ truffle exec scripts/seed-exchange.js
+$ npm install -g truffle
 ```
 
-Run app locally 
+4. Install ganache globally 
+```sh
+$ npm install -g ganache-cli
+```
+
+5. Run local blockchain as a fork of Ethereum mainnet using ganache-cli and Infura 
+Allow to work with the state of mainnet and deployed contracts on mainnet
+Go to infura create a new project and copy the mainnet URL 
+e.g Mainnet URL https://mainnet.infura.io/v3/11111111111111111
+```sh
+$ ganache-cli -f https://mainnet.infura.io/v3/11111111111111111
+```
+Above should run local blockchain with ganache. 
+Ensure truffle-config.js networks config is your Ganache port. 
+By default it should be host: 127.0.0.1 and port: 8545 
+
+6. Connect your ganache addresses to Metamask
+Copy private Key of the addresses in ganache and import to Metamask
+
+### Migrating contracts and Testing
+
+1. To compile contracts e.g you make changes to contracts
+```sh
+$ truffle compile 
+```
+
+2. Migrate contracts to locla running instance fork
+```sh
+$ truffle migrate --reset 
+```
+
+3. To test contracts 
+```sh
+$ truffle test
+```
+
+# Front End and how to use Dapp
+
+1. Run app locally 
 ```sh
 $ npm run start
 ```
 
-To interact with contracts, exchange with Metamask you need Metamask installed
-If using ganache copy private key from ganache cli to Metmask
-If want to interact with deployed contracts on other networks not local switch network on Metamask 
-
-### Other documents for project
-
-| Doc | Available at | About |
-| ------ | ------ |------ |
-| Design Patterns | [design_pattern_decisions.md](design_pattern_decisions.md) |Design pattern decisions|
-| Security  | [avoiding_common_attacks.md](avoiding_common_attacks.md) |Security considerations and implementations|
-| Addresses | [deployed_addresses.txt](deployed_addresses.txt) |Addresses and networks and testnest where contracts deployed |
-| Contributing | [Contributing.md](Contributing.md) |How to contribute to project|
-
-### Todos
- - Add more Etheruem tokens to trade
- - Extend the Fojini token
- - Make contract upgradeable
- - Explore protocols like 0x etc 
- - Explore more DEFI intergration e.g Compound
- - Explore more complex orders, matching etc and executions on exchange
- - Routing on front end eg Admin  panel to show status exchange,execute emergency etc 
+Click the button "Borrow DAI" to deposit ETH and borrow an amount of DAI into your wallet from Aave protocol
+To interact with DAPP you need Metamask installed
 
 License
 ----
