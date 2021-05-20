@@ -39,7 +39,7 @@ contract AaveDeFi {
         lendingPool.deposit(ethAddress, msg.value, onBehalf, referall);
 
         // Enable deposit to be used as collateral
-        //lendingPool.setUserUseReserveAsCollateral(ethAddress, true);
+        lendingPool.setUserUseReserveAsCollateral(ethAddress, true);
 
         // determine the maximum amount of DAI that can be borrowed against the ETH collateral deposited 
         // function getUserAccountData(address user)
