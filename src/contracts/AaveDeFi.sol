@@ -41,6 +41,8 @@ contract AaveDeFi {
         // Enable deposit to be used as collateral
         lendingPool.setUserUseReserveAsCollateral(ethAddress, true);
 
+
+        // The maximum amount you can borrow depends on the value you have deposited and the available liquidity
         // determine the maximum amount of DAI that can be borrowed against the ETH collateral deposited 
         // function getUserAccountData(address user)
         (uint256 totalCollateralETH,
@@ -50,9 +52,10 @@ contract AaveDeFi {
         uint256 ltv,
         uint256 healthFactor) = lendingPool.getUserAccountData(onBehalf);
 
-        // use availableBorrowsETH to determin max amount DAI to borrow
+        // use availableBorrowsETH to determine max amount DAI to borrow
         // not sure (making assumptions here) e.g 
         // do we need to use Oracle? Is there functions to determine amount for each asset etc ???
+        // do I just use the 0.8 LTV (loan to value for ETH to calculate ethValue DAI that can be borrowed???)
         uint _amountDAIBorrow = availableBorrowsETH * 3000; // simplify price ETH get amount DAI in wei 
 
         //function borrow(address asset, uint256 amount, uint256 interestRateMode, uint16 referralCode, address onBehalfOf)

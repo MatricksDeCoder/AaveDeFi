@@ -74,9 +74,9 @@ contract('AaveDeFi', ([deployer, account]) => {
       log.event.should.eq('DepositBorrow')
       const event = log.args
       event.ethAmountDeposited.toString().should.equal(ethAmountDeposited.toString())
-      //save value daiBorrowed
-      daiAmountBorrowed = event.daiAmountBorrowed;
-      event.daiAmountBorrowed.toString().should.equal(daiAmountBorrowed.toString())
+      //max amount DAI borrowed need some calculations here to determine
+      //daiAmountBorrowed = event.daiAmountBorrowed;
+      //event.daiAmountBorrowed.toString().should.equal(daiAmountBorrowed.toString())
     })
 
     it('sucessfully withdraws ETH from user to Aave', async () => {
