@@ -74,16 +74,18 @@ contract AaveDeFi {
         daiEthprice = priceDAI;
 
         // Calculate the maximum safe ETH value and respective DAI value you can borrow
-        uint safeETHAmount = (ltv * msg.value) / 100;
-        uint safeMaxDAIBorrow = (safeETHAmount / daiEthprice) * 10**18;
+        uint safeETHAmount = (ltv * msg.value) * 10**16; // account for 10**18/100 
+        uint safeMaxDAIBorrow = (safeETHAmount * 10**18) / daiEthprice;
 
         // Borrow the safeMaxDAIBorrow amount from protocol
         // function borrow(address asset, uint256 amount, uint256 interestRateMode, uint16 referralCode, address onBehalfOf)
         // sends asset to msg.sender
+        // ??? need to fix WETH gateway sending
         // lendingPool.borrow(daiAddress, safeMaxDAIBorrow, variableRate, referall, onBehalf);
           
         // Send the borrowed DAI to borrower
-        require(IERC20(daiAddress).transfer(msg.sender, safeMaxDAIBorrow));
+        // ??? need to receive DAI first 
+        //require(IERC20(daiAddress).transfer(msg.sender, safeMaxDAIBorrow));
 
         // Update daiBorrowBalances
         totalDAIBorrows[msg.sender] = totalDAIBorrows[msg.sender] + safeMaxDAIBorrow;

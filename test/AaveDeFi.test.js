@@ -116,6 +116,7 @@ contract('AaveDeFi', ([_, borrower]) => {
       console.log(`compared price DAI/ETH at e.g https://www.coingecko.com/en/coins/dai/eth e.g 0.00035312`)
       // safeMAXDAIBorrows must exist
       expect(+event.safeMaxDAIBorrow.toString()).to.be.at.least(0);
+      console.log(`SAFE MAX DAI Borrow Amount ${web3.utils.fromWei(event.safeMaxDAIBorrow.toString())}`)
       // totalDAIBorrows using contract should increase by amount safeMaxDAIBorrow
       event.totalDAIBorrows.toString().should.equal((+totalDAIBorrows.toString() + +event.safeMaxDAIBorrow.toString()).toString())
     })
