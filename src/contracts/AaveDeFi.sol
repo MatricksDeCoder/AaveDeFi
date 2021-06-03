@@ -49,6 +49,14 @@ contract AaveDeFi {
         priceOracle = IPriceOracle(address(0xA50ba011c48153De246E5192C8f9258A2ba79Ca9));
     }
 
+    /*
+    receive() external payable {
+    }
+
+    fallback() external payable {
+    }
+    */
+
     /// @notice Function to deposit ETH collateral into Aave and immediately borrow maximum safe amount of DAI  
     /// @dev DepositBorrow event emitted if successfully borrows 
     function borrowDAIAgainstETH() external payable {
@@ -64,8 +72,8 @@ contract AaveDeFi {
 
         // Deposit the ETH sent with msg.value transfering aWETH to onBehalf who accrues the respective deposit power
         // function depositETH(address lendingPool, address onBehalfOf, uint16 referralCode)
-        // ?????????
-        // wethGateway.depositETH(addressLendingPool, msg.sender, referralCode);
+        // ???
+        // wethGateway.depositETH(addressLendingPool,msg.sender, referralCode);
 
         // Use Oracle to DAI price in wei (ETH value)
         // function getAssetPrice(address asset) external view returns (uint256);
