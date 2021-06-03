@@ -29,7 +29,7 @@ You need to have [Metamask Wallet](https://metamask.io/). Connect to the app usi
     * components
     * contracts
     index.js
-  * tests
+  * test
 
 ### Preconfiguration, Installation and Running project locally 
 
@@ -62,6 +62,7 @@ Go to infura create a new project and copy the mainnet URL
 e.g Mainnet URL https://mainnet.infura.io/v3/11111111111111111
 ```sh
 $ ganache-cli -f https://mainnet.infura.io/v3/11111111111111111
+
 ```
 Above should run local blockchain with ganache. 
 Ensure truffle-config.js networks config is your Ganache port. 
@@ -78,7 +79,7 @@ Connect your metamask to network Localhost 8545
 $ truffle compile 
 ```
 
-2. Migrate contracts to locla running instance fork
+2. Migrate contracts to local running instance fork
 ```sh
 $ truffle migrate --reset 
 ```
@@ -94,14 +95,13 @@ $ truffle test
 ```sh
 $ npm run start
 ```
-
+Enter amount of ETH to deposit. Aave has no lower or upper bound amount you may enter. Eg. enter 1 ETH or 0.1 ETH etc
 Click the button "Borrow DAI" to deposit ETH and borrow an amount of DAI into your wallet from Aave protocol
 To interact with DAPP you need Metamask installed
 
 ### To do app extension ideas 
 - Dapp functionalty hardcoded to only deposit ETH and borrow DAI will in future extend to lend any EC20 and borrow 
 any asset offered in Aave markets
-- Display blances aTokens etc
 - Display interest rates for borrowing assets
 - Display your transactions using subscribe to events e.g DepositBorrow in event in contract or such other etc 
 - Repay borrowed amount etc

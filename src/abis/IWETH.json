@@ -1,0 +1,181 @@
+{
+  "contractName": "IWETH",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "deposit",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.4+commit.c7e474f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"deposit\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/zed/Desktop/AaveDeFi/src/contracts/IWETH.sol\":\"IWETH\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/zed/Desktop/AaveDeFi/src/contracts/IWETH.sol\":{\"keccak256\":\"0x223e776dd436ea9cc0a71581363a0882888910698a88e7785446f71e85e32481\",\"license\":\"agpl-3.0\",\"urls\":[\"bzz-raw://48a81495a39672ccdf9c2a5da1493715445a7a6bd5407f57f00f8e377dd9d908\",\"dweb:/ipfs/QmdeSokcuU93R9KC6VVpZXeVdGV2MbxaS1aQTZ9P5cxoNk\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: agpl-3.0\npragma solidity ^0.8.4;\n\ninterface IWETH {\n  function deposit() external payable;\n}",
+  "sourcePath": "/Users/zed/Desktop/AaveDeFi/src/contracts/IWETH.sol",
+  "ast": {
+    "absolutePath": "/Users/zed/Desktop/AaveDeFi/src/contracts/IWETH.sol",
+    "exportedSymbols": {
+      "IWETH": [
+        312
+      ]
+    },
+    "id": 313,
+    "license": "agpl-3.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 308,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".4"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "37:23:4"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 312,
+        "linearizedBaseContracts": [
+          312
+        ],
+        "name": "IWETH",
+        "nameLocation": "72:5:4",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "functionSelector": "d0e30db0",
+            "id": 311,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "deposit",
+            "nameLocation": "91:7:4",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 309,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "98:2:4"
+            },
+            "returnParameters": {
+              "id": 310,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "117:0:4"
+            },
+            "scope": 312,
+            "src": "82:36:4",
+            "stateMutability": "payable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 313,
+        "src": "62:58:4",
+        "usedErrors": []
+      }
+    ],
+    "src": "37:83:4"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/zed/Desktop/AaveDeFi/src/contracts/IWETH.sol",
+    "exportedSymbols": {
+      "IWETH": [
+        312
+      ]
+    },
+    "id": 313,
+    "license": "agpl-3.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 308,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".4"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "37:23:4"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 312,
+        "linearizedBaseContracts": [
+          312
+        ],
+        "name": "IWETH",
+        "nameLocation": "72:5:4",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "functionSelector": "d0e30db0",
+            "id": 311,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "deposit",
+            "nameLocation": "91:7:4",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 309,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "98:2:4"
+            },
+            "returnParameters": {
+              "id": 310,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "117:0:4"
+            },
+            "scope": 312,
+            "src": "82:36:4",
+            "stateMutability": "payable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 313,
+        "src": "62:58:4",
+        "usedErrors": []
+      }
+    ],
+    "src": "37:83:4"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.4+commit.c7e474f2.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.1",
+  "updatedAt": "2021-06-03T15:16:43.581Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
