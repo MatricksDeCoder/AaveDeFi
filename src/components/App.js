@@ -100,7 +100,9 @@ class App extends Component {
 
   async loadTotalDaiBorrows() {
     let totalDAIBorrows = await this.state.aaveDeFi.methods.totalDAIBorrows(this.state.account).call()
+    // scaling in Smart Contract Code
     totalDAIBorrows = fromWei(totalDAIBorrows.toString())
+    totalDAIBorrows = fromWei(totalDAIBorrows)
     await this.setState(prevState => ({totalDAIBorrows}))
   }
 

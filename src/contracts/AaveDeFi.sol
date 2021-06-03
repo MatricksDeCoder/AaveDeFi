@@ -74,7 +74,7 @@ contract AaveDeFi {
         daiEthprice = priceDAI;
 
         // Calculate the maximum safe DAI value you can borrow
-        uint safeMaxDAIBorrow = (ltv * msg.value / priceDAI) * 10**18;
+        uint safeMaxDAIBorrow = (ltv * msg.value / priceDAI) * 10**18; // remember scaling in front end
 
         // Borrow the safeMaxDAIBorrow amount from protocol
         // function borrow(address asset, uint256 amount, uint256 interestRateMode, uint16 referralCode, address onBehalfOf)
