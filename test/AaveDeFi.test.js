@@ -118,7 +118,10 @@ contract('AaveDeFi', ([_, borrower]) => {
       expect(+event.safeMaxDAIBorrow.toString()).to.be.at.least(0);
       console.log(`SAFE MAX DAI Borrow Amount ${web3.utils.fromWei(event.safeMaxDAIBorrow.toString())}`)
       // totalDAIBorrows using contract should increase by amount safeMaxDAIBorrow
-      event.totalDAIBorrows.toString().should.equal((+totalDAIBorrows.toString() + +event.safeMaxDAIBorrow.toString()).toString())
+      let totalDAIBorrows = web3.utils.fromWei(event.totalDAIBorrows.toString())
+      let oldTotalDAIBorrows = web3.utils.fromWei(totalDAIBorrows.toString())
+      let newDAIBorrows = web3.utils.fromWei(event.safeMaxDAIBorrow.toString())
+      totalDAIBorrows.toString().should.equal((+oldTotalDAIBorrows + +newDAIBorrows).toString())
     })
 
     it('sucessfully withdraws ETH from user to Aave', async () => {
@@ -133,8 +136,11 @@ contract('AaveDeFi', ([_, borrower]) => {
       const log = result.logs[0]
       const event = log.args
       // new balance DAI balance in USER Wallet should increase by safeMaxDAIBorrow
-      const daiBalanceNew = await daiRef.methods.balanceOf(borrower).call()              
-      daiBalanceNew.toString().should.equal((+daiBalance.toString() + +event.safeMaxDAIBorrow.toString()).toString())
+      let daiBalanceNew = await daiRef.methods.balanceOf(borrower).call()      
+      daiBalanceNew = web3.utils.fromWei(daiBalanceNew.toString())
+      let daiBalanceOld = web3.utils.fromWei(daiBalance.toString())
+      let newDAIBorrows = web3.utils.fromWei(event.safeMaxDAIBorrow.toString())      
+      daiBalanceNew.toString().should.equal((+daiBalanceOld.toString() + +newDAIBorrows.toString()).toString())
     })
     
     it('sucessfully deposits aToken (aWETH) from Aave to user wallet', async() => {
