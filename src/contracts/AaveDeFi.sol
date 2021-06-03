@@ -60,7 +60,7 @@ contract AaveDeFi {
         address daiAddress = address(0x6B175474E89094C44Da98b954EedeAC495271d0F); // DAI mainnet address
         uint16 referralCode = 0; // referralCode 0 is like none
         uint256 variableRate = 2; // 1 is stable rate, 2 is variable rate. We will make use of variable rates
-        uint ltv = 8; // The maximum Loan To Value (LTV) Ratio for the deposited asset/ETH = 0.8 represented as 8/10
+        uint ltv = 80; // The maximum Loan To Value (LTV) Ratio for the deposited asset/ETH = 0.8 represented as 80/100
 
         // Deposit the ETH sent with msg.value transfering aWETH to onBehalf who accrues the respective deposit power
         // function depositETH(address lendingPool, address onBehalfOf, uint16 referralCode)
@@ -74,8 +74,8 @@ contract AaveDeFi {
         daiEthprice = priceDAI;
 
         // Calculate the maximum safe ETH value and respective DAI value you can borrow
-        uint safeETHAmount = (ltv * msg.value) / 10;
-        uint safeMaxDAIBorrow = safeETHAmount / daiEthprice;
+        uint safeETHAmount = (ltv * msg.value) / 100;
+        uint safeMaxDAIBorrow = (safeETHAmount / daiEthprice) * 10**18;
 
         // Borrow the safeMaxDAIBorrow amount from protocol
         // function borrow(address asset, uint256 amount, uint256 interestRateMode, uint16 referralCode, address onBehalfOf)
