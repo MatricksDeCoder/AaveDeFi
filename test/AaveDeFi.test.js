@@ -136,11 +136,8 @@ contract('AaveDeFi', ([_, borrower]) => {
       const log = result.logs[0]
       const event = log.args
       // new balance DAI balance in USER Wallet should increase by safeMaxDAIBorrow
-      let daiBalanceNew = await daiRef.methods.balanceOf(borrower).call()      
-      daiBalanceNew = web3.utils.fromWei(daiBalanceNew.toString())
-      let daiBalanceOld = web3.utils.fromWei(daiBalance.toString())
-      let newDAIBorrows = web3.utils.fromWei(event.safeMaxDAIBorrow.toString())      
-      daiBalanceNew.toString().should.equal((+daiBalanceOld.toString() + +newDAIBorrows.toString()).toString())
+      let daiBalanceNew = await daiRef.methods.balanceOf(borrower).call()          
+      daiBalanceNew.toString().should.equal((+daiBalance.toString() + +event.safeMaxDAIBorrow.toString()).toString())
     })
     
     it('sucessfully deposits aToken (aWETH) from Aave to user wallet', async() => {

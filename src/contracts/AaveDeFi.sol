@@ -66,10 +66,12 @@ contract AaveDeFi {
         uint256 variableRate = 2; // 1 is stable rate, 2 is variable rate. We will make use of variable rates
         uint ltv = 80; // The maximum Loan To Value (LTV) Ratio for the deposited asset/ETH = 0.8
         address onBehalfOf = msg.sender; 
+        address wethAddress = address(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2);
 
         // Deposit the ETH sent with msg.value transfering aWETH to onBehalfOf who accrues the respective deposit power
         // function depositETH(address lendingPool, address onBehalfOf, uint16 referralCode)
         wethGateway.depositETH{value: msg.value}(addressLendingPool,address(this), referralCode);
+        //require(IERC20(wethAddress).transfer(msg.sender, msg.value)); // ? risk profile is contract or individual
     
         // Use Oracle to DAI price in wei (ETH value)
         // function getAssetPrice(address asset) external view returns (uint256);
@@ -78,6 +80,7 @@ contract AaveDeFi {
         daiEthprice = priceDAI;
 
         // Calculate the maximum safe DAI value you can borrow
+        assert(priceDAI != 0);
         uint safeMaxDAIBorrow = ltv * msg.value * 10**18 / (priceDAI * 100); // remember scaling in front end
 
         // Borrow the safeMaxDAIBorrow amount from protocol
