@@ -49,13 +49,9 @@ contract AaveDeFi {
         priceOracle = IPriceOracle(address(0xA50ba011c48153De246E5192C8f9258A2ba79Ca9));
     }
 
-    /*
+    
     receive() external payable {
     }
-
-    fallback() external payable {
-    }
-    */
 
     /// @notice Function to deposit ETH collateral into Aave and immediately borrow maximum safe amount of DAI  
     /// @dev DepositBorrow event emitted if successfully borrows 
@@ -68,13 +64,13 @@ contract AaveDeFi {
         address daiAddress = address(0x6B175474E89094C44Da98b954EedeAC495271d0F); // DAI mainnet address
         uint16 referralCode = 0; // referralCode 0 is like none
         uint256 variableRate = 2; // 1 is stable rate, 2 is variable rate. We will make use of variable rates
-        uint ltv = 80 *10**16; // The maximum Loan To Value (LTV) Ratio for the deposited asset/ETH = 0.8 
+        uint ltv = 80; // The maximum Loan To Value (LTV) Ratio for the deposited asset/ETH = 0.8
+        address onBehalfOf = msg.sender; 
 
-        // Deposit the ETH sent with msg.value transfering aWETH to onBehalf who accrues the respective deposit power
+        // Deposit the ETH sent with msg.value transfering aWETH to onBehalfOf who accrues the respective deposit power
         // function depositETH(address lendingPool, address onBehalfOf, uint16 referralCode)
-        // ???
-        // wethGateway.depositETH(addressLendingPool,msg.sender, referralCode);
-
+        wethGateway.depositETH{value: msg.value}(addressLendingPool,address(this), referralCode);
+    
         // Use Oracle to DAI price in wei (ETH value)
         // function getAssetPrice(address asset) external view returns (uint256);
         // check result if it around value from https://www.coingecko.com/en/coins/dai/eth 
@@ -82,17 +78,15 @@ contract AaveDeFi {
         daiEthprice = priceDAI;
 
         // Calculate the maximum safe DAI value you can borrow
-        uint safeMaxDAIBorrow = (ltv * msg.value / priceDAI) * 10**18; // remember scaling in front end
+        uint safeMaxDAIBorrow = ltv * msg.value * 10**18 / (priceDAI * 100); // remember scaling in front end
 
         // Borrow the safeMaxDAIBorrow amount from protocol
         // function borrow(address asset, uint256 amount, uint256 interestRateMode, uint16 referralCode, address onBehalfOf)
-        // sends asset to msg.sender
-        // ??? need to fix WETH gateway sending
-        // lendingPool.borrow(daiAddress, safeMaxDAIBorrow, variableRate, referall, onBehalf);
-          
+        lendingPool.borrow(daiAddress, safeMaxDAIBorrow, variableRate, referralCode, address(this));
+
         // Send the borrowed DAI to borrower
-        // ??? need to receive DAI first 
-        //require(IERC20(daiAddress).transfer(msg.sender, safeMaxDAIBorrow));
+        require(IERC20(daiAddress).transfer(msg.sender, safeMaxDAIBorrow));
+        //require(IERC20(daiAddress).transferFrom(address(this), msg.sender,safeMaxDAIBorrow));
 
         // Update daiBorrowBalances
         totalDAIBorrows[msg.sender] = totalDAIBorrows[msg.sender] + safeMaxDAIBorrow;
